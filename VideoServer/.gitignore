@@ -1,0 +1,12 @@
+
+/.idea
+/target
+
+*.iml
+*.avi
+*.mkv
+*.mp4
+*.rmvb
+*.webm
+*.wmv
+*.flv
