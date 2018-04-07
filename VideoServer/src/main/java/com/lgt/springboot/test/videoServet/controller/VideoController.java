@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ public class VideoController {
 
     @Value("${video.rootPath}")
     private String videoRootPath;
+//    private String videoRootPath = "/mnt/sda1/video";
 
     /**
      * 视频列表
@@ -35,51 +37,18 @@ public class VideoController {
     }
 
     /**
-     * 视频播放
+     * 子文件夹
      * @return
      */
-//    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-//    private ModelAndView play(@PathVariable(value="name") String name) {
-//        ModelAndView modelAndView = new ModelAndView("videoPlay.jsp");
-//        modelAndView.addObject("video", name);
-//        return modelAndView;
-//    }
+    @RequestMapping(value = "/{subFilePath}", method = RequestMethod.GET)
+    private ModelAndView play(@PathVariable(value="name") String name) {
+        List<String> videos = FileUtils.getAllFileOrderByCreateTimeDesc(videoRootPath);
+        ModelAndView modelAndView = new ModelAndView("videoList.jsp");
+        modelAndView.addObject("videos", videos);
+        return modelAndView;
+    }
 
-//    /**
-//     * 视频播放
-//     * @return
-//     */
-//    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-//    private void play(HttpServletRequest request, HttpServletResponse response,
-//                              @PathVariable(value="name") String name) {
-//        File file = new File("e:/" + name);
-//
-//        InputStream in = null;
-//        ServletOutputStream out = null;
-//        try {
-//            in = new FileInputStream(file);
-//            out = response.getOutputStream();
-//            byte[] buffer = new byte[4 * 1024];
-//            int length;
-//            while ((length = in.read(buffer)) > 0) {
-//                out.write(buffer, 0, length);
-//            }
-//        } catch (FileNotFoundException e) {
-//            System.out.println("文件读取失败,文件不存在");
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            System.out.println("文件流输出异常");
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                in.close();
-//                out.close();
-//            } catch (IOException e) {
-//                System.out.println("文件流关闭异常");
-//                e.printStackTrace();
-//            }
-//        }
-//    }
+
 
 
 

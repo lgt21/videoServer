@@ -19,32 +19,6 @@ public class FileUtils {
 
     private final static List<String> VIDEO_SUFFIX = Arrays.asList("mp4", "flv", "rm", "rmvb", "mkv", "avi", "wmv");
 
-//    public static List<String> getAllFileOrderByCreateTimeDesc(String filePath) {
-//        if(StringUtils.isBlank(filePath)) {
-//            return null;
-//        }
-//        //获取系统编码
-//        String encoding = System.getProperty("file.encoding");
-//        try {
-//            File file = new File(new String(filePath.getBytes("UTF-8"),encoding));
-//            File[] files = file.listFiles(new FileFilter() {
-//                @Override
-//                public boolean accept(File f) {
-//                    return isVideo(f.getName());
-//                }
-//            });
-//            List<String> res = new ArrayList<>();
-//            for(File f: files) {
-//                res.add(new String(f.getName().getBytes(encoding),"UTF-8"));
-//            }
-//            return res;
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return null;
-//    }
-
     public static List<String> getAllFileOrderByCreateTimeDesc(String filePath) {
         if(StringUtils.isBlank(filePath)) {
             return null;
@@ -55,7 +29,15 @@ public class FileUtils {
         }
 
         String[] files = file.list();
-        List<String> res = Arrays.asList(files).stream()
+
+        List<String> subFilePath = Arrays.asList(files).stream()
+                .filter(f -> new File(filePath + File.separator + f).isDirectory())
+                .collect(Collectors.toList());
+        List<String> res = new ArrayList<>();
+        subFilePath.forEach(f -> getAllFileOrderByCreateTimeDesc(filePath + File.separator + f)
+            .forEach(ff -> res.add(f + File.separator + ff)));
+
+        res.addAll(Arrays.asList(files).stream()
                 .filter(f -> isVideo(f))
                 .map(f ->  new File(filePath + File.separator + f))
                 .sorted((File f1, File f2) -> {
@@ -63,7 +45,7 @@ public class FileUtils {
                     return f1.lastModified()>f2.lastModified()?-1:1;
                 })
                 .map(f -> f.getName())
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
         return res;
     }
 

@@ -1,4 +1,4 @@
 # videoServer
 
-fe: react + redex
+fe: react + redux
 bg: springboot

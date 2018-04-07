@@ -15,9 +15,9 @@
 </script>
 <body>
 <ul>
-<%--    <c:forEach items="${videos}" var="video">
-        <li><a href="/${video}">${video}</a> </li>
-    </c:forEach>--%>
+    <c:forEach items="${videos}" var="video">
+        <li><a href="http://192.168.1.88:81/sda1/video/${video}">${video}</a> </li>
+    </c:forEach>
   <%--  mp4:
     <video src="/video/大鱼.mp4" controls="controls">
         your browser does not support the video tag
@@ -52,6 +52,7 @@
         your browser does not support the video tag
     </video>--%>
 
+<%--
     mp4:
     <video id="my-video" class="video-js" controls preload="auto" width="640" height="264">
         mp4: <source src="/video/大鱼.mp4" type='video/mp4'>
@@ -68,6 +69,7 @@
             <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
         </p>
     </video>
+--%>
 
 
 </ul>
